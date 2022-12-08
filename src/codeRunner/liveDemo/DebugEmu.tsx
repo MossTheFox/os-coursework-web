@@ -1,0 +1,88 @@
+import { Box, Accordion, Typography } from "@mui/material"
+import { useEffect, useCallback, useState, useRef, useMemo, memo } from "react";
+import { wasmModules } from "../wasmModules";
+
+
+function DebugEmu({
+    enable = false,
+    select = 'A',
+    param = '',
+    // onFinished = null
+}: {
+    enable: boolean,
+    select: 'A' | 'B' | 'C' | 'D',
+    param?: string,
+    onFinished?: () => any,
+}) {
+
+    const runToggle = useMemo(() => enable, [enable]);
+    const [text, setText] = useState('...');
+    const [lines, setLines] = useState<string[]>([]);
+
+    const handleChange = useCallback((str: string) => {
+        console.log(['New Line: ' + str])
+        setLines((prev) => [...prev, str]);
+        if (boxRef?.current) {
+            setTimeout(() => {
+                boxRef.current?.scrollTo(0, boxRef.current?.scrollHeight);
+            }, 0);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (lines.length) {
+            setText(lines.join('\n'));
+        } else {
+            setText(wasmModules.err || '未运行...')
+        }
+    }, [lines]);
+
+    const boxRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (wasmModules.err || !wasmModules.debugModule) {
+            setText(wasmModules.err + '');
+            return;
+        }
+        if (runToggle) {
+            // reset
+            setLines([]);
+            // window anchorEl
+            window.__CONSOLE_INPUT__.anchorEl = boxRef.current;
+            window.__CONSOLE_HANDLER__.registerCallbackFunction(handleChange);
+            switch (select) {
+                case 'A':
+                    wasmModules.debugModule.run_print();
+                    break;
+                case 'B':
+                    wasmModules.debugModule.run_endless();
+                    break;
+                case 'C':
+                    wasmModules.debugModule.run_give_param(param);
+                    break;
+                case 'D':
+                    wasmModules.debugModule.run_ask_input();
+                    break;
+            }
+            // return func, clean all
+            return () => {
+                window.__CONSOLE_HANDLER__.unregisterCallbackFunction();
+            };
+        } else {
+            window.__CONSOLE_HANDLER__.unregisterCallbackFunction();
+            // ok how to stop...
+            setLines([]);
+        }
+    }, [runToggle, select, param]);
+
+    return <Accordion>
+        <Box ref={boxRef} p={2} sx={{
+            maxHeight: "10rem",
+            overflowY: "auto"
+        }}>
+            <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{text}</Typography>
+        </Box>
+    </Accordion>;
+}
+
+export default memo(DebugEmu);

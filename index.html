@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OS Coursework Demo</title>
+
+
+  <!-- TODO: loading background -->
+
+  <script>
+    /**
+     * 请求输入由 wasm 模块调用
+     * @param type {'int' | 'string' | 'double' | 'float' | 'long'}
+     */
+    function stdinEmu(type) {
+      let p = new Promise((resolve, reject) => {
+        pendingResolve(resolve);
+      });
+      // expose resolve func
+      return p;
+    }
+
+    function pendingResolve(resolve) {
+      // triggered...
+      let trigger = window.__CONSOLE_INPUT__?.getTrigger();
+      if (trigger) {
+        trigger(resolve);
+        return;
+      }
+      resolve(-1);
+    };
+
+  </script>
+  <script type="module">
+    /**
+     * @type {(resolve: (input: any) => void) => void} 
+     */
+    let inputHandlerCB = null;
+    window.__CONSOLE_INPUT__ = {
+      registerInputHandler: (fn) => inputHandlerCB = fn,
+      removeInputHandler: () => inputHandlerCB = null,
+      getTrigger: () => inputHandlerCB,
+      anchorEl: null
+    };
+
+  </script>
+
+  <script type="module">
+    // Redirect console log
+    let consoleLog = console.log;
+
+    const defaultCallback = (str) => consoleLog(str);
+    let consoleLogCallback = defaultCallback;
+
+    /**
+     * 重定向控制台输出、注册 Callback 用
+     */
+    const consoleOutputHandler = {
+      registerCallbackFunction: (fn) => {
+        consoleLogCallback = fn;
+      },
+      unregisterCallbackFunction: () => {
+        consoleLogCallback = defaultCallback
+      },
+      checkBindStatus: () => {
+        // true means some other function is binding to this
+        return defaultCallback !== consoleLogCallback;
+      }
+    }
+
+    // Export...
+
+    window.__CONSOLE_HANDLER__ = consoleOutputHandler;
+
+
+    console.log = function (...data) {
+      if (data.length === 1 && typeof data[0] === 'string') {
+        // handle
+        consoleLogCallback(data[0]);
+      } else {
+        consoleLog(...data);
+      }
+    }
+  </script>
+
+  <!-- Load WASN Modules -->
+
+  <!-- export name: debugModule -->
+  <script src="/wasm/debug/debug.js"></script>
+
+  <!-- export name: createModule -->
+  <!-- <script src="/wasm/test.js"></script> -->
+
+  <!-- export name: pdModule -->
+  <!-- <script src="/wasm/producer_consumer/producer_consumber.js"></script> -->
+
+  <!-- export name: createBProcessSchedulingModule -->
+  <script src="/wasm/b_process_scheduling/b_process_scheduling.js"></script>
+
+
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
