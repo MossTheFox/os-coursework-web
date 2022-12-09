@@ -1,6 +1,8 @@
-import { Box, Button, Container, Grid, Paper, Typography, TextField, Divider } from "@mui/material";
+import { Box, Button, Container, Grid, Paper, Typography, TextField, Divider, Stack } from "@mui/material";
 import { useState, useCallback, useEffect } from "react";
+import { openCodeblockWindow } from "../../components/codeblockUtils";
 import TabbedPlaygroundTemplate from "../../components/TabbedPlaygroundTemplate";
+import LiuProcessCommunicationEmu from "../liveDemo/LiuProcessCommunicationEmu";
 import PlaceholderEmu from "../liveDemo/PlaceholderEmu";
 import WindowCommunicationEmu from "../liveDemo/WindowCommunicationEmu";
 import { wasmModules } from "../wasmModules";
@@ -40,7 +42,7 @@ function PaperProcessCommunication() {
             <Typography variant="h6" fontWeight="bolder" gutterBottom textAlign={"center"}
                 borderBottom={1} borderColor="divider"
             >
-                进程通信 (WIP)
+                进程通信
             </Typography>
             <Typography variant="body2" gutterBottom textAlign="center">
                 进程之间信息交换的不同方式
@@ -51,7 +53,7 @@ function PaperProcessCommunication() {
                 tabNames={[
                     "共享存储器系统",
                     "消息缓冲队列 (直接消息传递)",
-                    "信箱通信 (间接消息传递)",
+                    "信箱通信模拟 (间接消息传递)",
                 ]}
                 tabNodes={[
                     <Box>
@@ -113,14 +115,22 @@ function PaperProcessCommunication() {
                                     borderColor="divider"
                                 >程序语言: C++</Typography>
 
-                                <Button variant="outlined"
-                                    children={'WIP'}
-                                    disabled
+                                <Box sx={{ pb: 2 }}>
+                                    <Button variant="outlined"
+                                        children={enableB ? '重置程序' : '启动程序'}
+                                        onClick={toggleB}
+                                    />
+                                </Box>
+
+                                <Button variant="text"
+                                    color="info"
+                                    children={'查看源代码'}
+                                    onClick={openCodeblockWindow.bind(null, 'liu-process-communication')}
                                 />
                             </Grid>
 
                             <Grid item xs={12}>
-                                <PlaceholderEmu />
+                                <LiuProcessCommunicationEmu enable={enableB} />
                             </Grid>
 
                         </Grid>

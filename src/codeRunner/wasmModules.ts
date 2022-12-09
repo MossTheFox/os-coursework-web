@@ -10,7 +10,9 @@
 
 // emcc -std=c++11 -pthread -s "./program.cpp" -o "wasm_module.js" -s MODULARIZE=1 -s EXPORT_NAME=moduleName -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -s PTHREAD_POOL_SIZE=4 -sASYNCIFY
 
-// emcc -std=c++11 -pthread -s "./combined_LLF_EDF.cpp" -o "b_process_scheduling.js" -s MODULARIZE=1 -s EXPORT_NAME=createBProcessSchedulingModule -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -s PTHREAD_POOL_SIZE=1 -sASYNCIFY
+// emcc -std=c++11 -pthread -s "./combined_LLF_EDF.cpp" -o "b_process_scheduling.js" -s MODULARIZE=1 -s EXPORT_NAME=createBProcessSchedulingModule -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -s PTHREAD_POOL_SIZE=1 -sASYNCIFY -s ASYNCIFY_IMPORTS=[wait_for_number, wait_for_string]
+
+// emcc -std=c++11 -pthread -s "./LiuProgramsConbined.cpp" -o "liu-program-combined.js" -s MODULARIZE=1 -s EXPORT_NAME=liuModuleA -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -s PTHREAD_POOL_SIZE=1 -sASYNCIFY -s ASYNCIFY_IMPORTS=[wait_for_number, wait_for_string]
 
 /**
  * 组员标记:
@@ -29,9 +31,10 @@ export const wasmModules: {
         run_give_param: (param?: string) => {},
         stop: () => {}
     },
-    bProcessScheduling?: {
+    liuCombinedA?: {
         run_EDF: () => {},
-        run_LLF: () => {}
+        run_LLF: () => {},
+        run_programCommunication: () => {}
     },
     lzwPD?: {
         run: () => {}
@@ -68,17 +71,20 @@ export const wasmModules: {
             };
         }
 
-        // 1. Liu: LLF EDF
-        if (typeof createBProcessSchedulingModule !== 'undefined') {
+        // 1. LiuModuleA
+        if (typeof liuModuleA !== 'undefined') {
 
-            let module1 = await createBProcessSchedulingModule();
-            wasmModules.bProcessScheduling = {
+            let module1 = await liuModuleA();
+            wasmModules.liuCombinedA = {
                 run_EDF: () => {
                     module1.ccall('run_EDF', null, null, null);
                 },
                 run_LLF: () => {
                     module1.ccall('run_LLF', null, null, null);
                 },
+                run_programCommunication: () => {
+                    module1.ccall('run_program_communication', null, null, null, { async: true });
+                }
             };
         }
         // 2: async Producer Consumer (To be CHANGED since it cannot be stopped)

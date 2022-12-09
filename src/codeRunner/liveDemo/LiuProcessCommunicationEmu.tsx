@@ -3,13 +3,10 @@ import { useEffect, useCallback, useState, useRef, useMemo, memo } from "react";
 import { wasmModules } from "../wasmModules";
 
 
-function bProcessSchedulingEmu({
+function LiuProcessCommunicationEmu({
     enable = false,
-    select = 'A',
-    // onFinished = null
 }: {
     enable: boolean,
-    select: 'A' | 'B',
     onFinished?: () => any,
 }) {
 
@@ -48,14 +45,7 @@ function bProcessSchedulingEmu({
             // window anchorEl
             window.__CONSOLE_INPUT__.anchorEl = boxRef.current;
             window.__CONSOLE_HANDLER__.registerCallbackFunction(handleChange);
-            switch (select) {
-                case 'A':
-                    wasmModules.liuCombinedA.run_EDF();
-                    break;
-                case 'B':
-                    wasmModules.liuCombinedA.run_LLF();
-                    break;
-            }
+            wasmModules.liuCombinedA.run_programCommunication();
             // return func, clean all
             return () => {
                 window.__CONSOLE_HANDLER__.unregisterCallbackFunction();
@@ -65,7 +55,7 @@ function bProcessSchedulingEmu({
             // ok how to stop...
             setLines([]);
         }
-    }, [runToggle, select]);
+    }, [runToggle]);
 
     return <Accordion>
         <Box ref={boxRef} p={2} sx={{
@@ -77,4 +67,4 @@ function bProcessSchedulingEmu({
     </Accordion>;
 }
 
-export default memo(bProcessSchedulingEmu);
+export default memo(LiuProcessCommunicationEmu);

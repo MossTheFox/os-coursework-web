@@ -19,7 +19,8 @@ function WindowCommunicationEmu({
     }, [childWindow]);
 
     const openWindow = useCallback(() => {
-        let wind = window.open('/post_message.html', '子窗口', 'popup, width=360, height=480');
+        // (302 重定向会影响 window.opener... 用完整 URL)
+        let wind = window.open('/post-message/', '子窗口', 'popup, width=360, height=480');
         setChildWindow(wind);
         if (!wind) {
             setTipText('打开窗口遇到问题，请确保当前页面是焦点页面、以及你的浏览器没有拦截此窗口。')

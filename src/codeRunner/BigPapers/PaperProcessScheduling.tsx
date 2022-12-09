@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, Paper, Typography, TextField, Divider } from "@mui/material";
 import { useState, useCallback, useEffect } from "react";
+import { openCodeblockWindow } from "../../components/codeblockUtils";
 import TabbedPlaygroundTemplate from "../../components/TabbedPlaygroundTemplate";
 import AJobSchedulingEmu from "../liveDemo/AJobSchedulingEmu";
 import AProcessSchedulingEmu from "../liveDemo/AProcessSchedulingEmu";
@@ -58,7 +59,7 @@ function PaperProcessScheduling() {
                 tabs={4}
                 tabNames={[
                     "作业调度",
-                    "LLF (交互式)",
+                    "进程调度 (LLF)",
                     "EDF",
                     "LLF",
                 ]}
@@ -181,9 +182,17 @@ function PaperProcessScheduling() {
                                     borderBottom={1}
                                     borderColor="divider"
                                 >程序语言: C++</Typography>
-                                <Button variant="outlined"
-                                    children={enableC ? '重置程序' : '启动程序'}
-                                    onClick={toggleC}
+                                <Box pb={2}>
+
+                                    <Button variant="outlined"
+                                        children={enableC ? '重置程序' : '启动程序'}
+                                        onClick={toggleC}
+                                    />
+                                </Box>
+                                <Button variant="text"
+                                    color="info"
+                                    children={'查看源代码'}
+                                    onClick={openCodeblockWindow.bind(null, 'liu-edf-llf')}
                                 />
                             </Grid>
 
@@ -220,9 +229,16 @@ function PaperProcessScheduling() {
                                     borderBottom={1}
                                     borderColor="divider"
                                 >程序语言: C++</Typography>
-                                <Button variant="outlined"
-                                    children={enableD ? '重置程序' : '启动程序'}
-                                    onClick={toggleD}
+                                <Box pb={2}>
+                                    <Button variant="outlined"
+                                        children={enableD ? '重置程序' : '启动程序'}
+                                        onClick={toggleD}
+                                    />
+                                </Box>
+                                <Button variant="text"
+                                    color="info"
+                                    children={'查看源代码'}
+                                    onClick={openCodeblockWindow.bind(null, 'liu-edf-llf')}
                                 />
                             </Grid>
 

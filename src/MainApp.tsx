@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, Paper, Typography, Stack, Divider } from "@mui/material";
 import { useState, useCallback } from "react";
+import PaperDeadlockHandler from "./codeRunner/BigPapers/PaperDeadlockHandler";
 import PaperDebug from "./codeRunner/BigPapers/PaperDebug";
 import PaperProcessCommunication from "./codeRunner/BigPapers/PaperProcessCommunication";
 import PaperProcessControlAndStateChange from "./codeRunner/BigPapers/PaperProcessControlAndStateChange";
@@ -41,6 +42,18 @@ function MainApp() {
 
             {/* 4. 进程通信 */}
             <PaperProcessCommunication />
+
+            {/* 5. 死锁避免 */}
+            <PaperDeadlockHandler />
+
+            {/* 6. 内存分配 */}
+
+
+            {/* 7. 外存访问 */}
+
+
+            {/* 8. 线程机制 */}
+            
 
         </Stack>
 
