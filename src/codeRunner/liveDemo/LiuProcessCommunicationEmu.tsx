@@ -1,5 +1,5 @@
 import { Box, Accordion, Typography } from "@mui/material"
-import { useEffect, useCallback, useState, useRef, useMemo, memo } from "react";
+import { useEffect, useCallback, useState, useRef, useMemo } from "react";
 import { wasmModules } from "../wasmModules";
 
 
@@ -67,4 +67,4 @@ function LiuProcessCommunicationEmu({
     </Accordion>;
 }
 
-export default memo(LiuProcessCommunicationEmu);
+export default LiuProcessCommunicationEmu;

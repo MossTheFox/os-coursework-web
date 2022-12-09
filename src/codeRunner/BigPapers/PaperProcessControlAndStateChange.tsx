@@ -38,10 +38,10 @@ function PaperProcessControlAndStateChange() {
             <Typography variant="h6" fontWeight="bolder" gutterBottom textAlign={"center"}
                 borderBottom={1} borderColor="divider"
             >
-                进程调度
+                进程控制与状态切换
             </Typography>
             <Typography variant="body2" gutterBottom textAlign="center">
-                采用经典的实时调度算法来模拟进程的调度
+                这里模拟进程从创建开始的状态变化过程
             </Typography>
 
             <TabbedPlaygroundTemplate onTabChange={cleanUpFunction}

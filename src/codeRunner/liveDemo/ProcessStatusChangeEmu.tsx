@@ -1,5 +1,5 @@
 import { Box, Accordion, Typography, Grid, Stack, Button } from "@mui/material"
-import { memo, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const anchorPositonData = {
     'create': {
@@ -144,7 +144,9 @@ function ProcessStatusChangeEmu({
 
     return <Box>
         <Grid container spacing={2}>
-            <Grid item xs={12} sm={8} display="flex" justifyContent="center" alignItems="start">
+            <Grid item xs={12} sm={8} display="flex" justifyContent="center" alignItems="start"
+                sx={{ backgroundColor: '#fff', borderRadius: '16px', color: '#111' }}
+            >
                 <Box ref={anchor}
                     position="relative"
                     width="100%"
@@ -154,7 +156,7 @@ function ProcessStatusChangeEmu({
                         position: 'absolute',
                         ...arrowPositionCSS,
                         transform: 'translate(-50%, -100%)',
-                        transition: 'all 0.25s'
+                        transition: 'all 0.25s',
                     }}>
                         <img src="/static/arrow_down.svg" style={{ width: '1.5rem' }} alt="👇" />
                     </Box>
@@ -208,4 +210,4 @@ function ProcessStatusChangeEmu({
     </Box>
 }
 
-export default memo(ProcessStatusChangeEmu);
+export default ProcessStatusChangeEmu;

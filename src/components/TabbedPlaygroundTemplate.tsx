@@ -39,4 +39,4 @@ function TabbedPlaygroundTemplate({
     </TabContext>;
 }
 
-export default memo(TabbedPlaygroundTemplate);
+export default TabbedPlaygroundTemplate;

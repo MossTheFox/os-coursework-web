@@ -92,4 +92,4 @@ function WindowCommunicationEmu({
     </Grid>;
 }
 
-export default memo(WindowCommunicationEmu);
+export default WindowCommunicationEmu;

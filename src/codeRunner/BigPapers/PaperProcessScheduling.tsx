@@ -49,10 +49,10 @@ function PaperProcessScheduling() {
             <Typography variant="h6" fontWeight="bolder" gutterBottom textAlign={"center"}
                 borderBottom={1} borderColor="divider"
             >
-                进程控制与状态切换
+                进程调度
             </Typography>
             <Typography variant="body2" gutterBottom textAlign="center">
-                这里模拟进程从创建开始的状态变化过程
+                采用经典的实时调度算法来模拟进程的调度
             </Typography>
 
             <TabbedPlaygroundTemplate onTabChange={cleanUpFunction}

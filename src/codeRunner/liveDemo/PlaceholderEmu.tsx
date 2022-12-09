@@ -18,4 +18,4 @@ function PlaceholderEmu({
     </Accordion>;
 }
 
-export default memo(PlaceholderEmu);
+export default PlaceholderEmu;
