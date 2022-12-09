@@ -2,10 +2,13 @@ import { Box, Button, Container, Grid, Paper, Typography, Stack, Divider } from 
 import { useState, useCallback } from "react";
 import PaperDeadlockHandler from "./codeRunner/BigPapers/PaperDeadlockHandler";
 import PaperDebug from "./codeRunner/BigPapers/PaperDebug";
+import PaperFileSystemAccess from "./codeRunner/BigPapers/PaperFileSystemAccess";
+import PaperMemoryAllocation from "./codeRunner/BigPapers/PaperMemoryAllocation";
 import PaperProcessCommunication from "./codeRunner/BigPapers/PaperProcessCommunication";
 import PaperProcessControlAndStateChange from "./codeRunner/BigPapers/PaperProcessControlAndStateChange";
 import PaperProcessMutAndSync from "./codeRunner/BigPapers/PaperProcessMutAndSync";
 import PaperProcessScheduling from "./codeRunner/BigPapers/PaperProcessScheduling";
+import PaperThreadMechanism from "./codeRunner/BigPapers/PaperThreadMechanism";
 import InputPopover from "./codeRunner/InputPopover";
 import CodeBlock from "./codeRunner/monacoBlocks/CodeBlock";
 
@@ -47,13 +50,13 @@ function MainApp() {
             <PaperDeadlockHandler />
 
             {/* 6. 内存分配 */}
-
+            <PaperMemoryAllocation />
 
             {/* 7. 外存访问 */}
-
+            <PaperFileSystemAccess />
 
             {/* 8. 线程机制 */}
-            
+            <PaperThreadMechanism />
 
         </Stack>
 

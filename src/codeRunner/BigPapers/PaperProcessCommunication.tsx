@@ -3,7 +3,6 @@ import { useState, useCallback, useEffect } from "react";
 import { openCodeblockWindow } from "../../components/codeblockUtils";
 import TabbedPlaygroundTemplate from "../../components/TabbedPlaygroundTemplate";
 import LiuProcessCommunicationEmu from "../liveDemo/LiuProcessCommunicationEmu";
-import PlaceholderEmu from "../liveDemo/PlaceholderEmu";
 import WindowCommunicationEmu from "../liveDemo/WindowCommunicationEmu";
 import { wasmModules } from "../wasmModules";
 
