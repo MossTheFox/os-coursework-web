@@ -3,6 +3,7 @@ import { TreeItem, TreeView } from "@mui/lab";
 import { Box, Button, Container, Grid, Paper, Typography, TextField, Divider } from "@mui/material";
 import React from "react";
 import { useState, useCallback, useEffect } from "react";
+import { openCodeblockWindow } from "../../components/codeblockUtils";
 import TabbedPlaygroundTemplate from "../../components/TabbedPlaygroundTemplate";
 import useAsync from "../../scripts/useAsync";
 
@@ -192,23 +193,37 @@ function PaperFileSystemAccess() {
                                     fontWeight: "bolder"
                                 }}
                                     variant="body1"
+                                >组员: 乔译</Typography>
+                                <Typography color="primary" sx={{
+                                    fontWeight: "bolder"
+                                }}
+                                    variant="body1"
                                     gutterBottom
                                     borderBottom={1}
                                     borderColor="divider"
                                 >程序语言: TypeScript (React)</Typography>
-                                <Button variant="contained"
-                                    children={'showDirectoryPicker' in window ? '选择本地目录' : '浏览器不支持'}
-                                    disabled={!('showDirectoryPicker' in window)}
-                                    onClick={showDirectoryPicker}
+                                <Box pb={1}>
+                                    <Button variant="contained"
+                                        children={'showDirectoryPicker' in window ? '选择本地目录' : '浏览器不支持'}
+                                        disabled={!('showDirectoryPicker' in window)}
+                                        onClick={showDirectoryPicker}
+                                    />
+                                </Box>
+                                <Button variant="text"
+                                    color="info"
+                                    children={'查看源代码'}
+                                    onClick={openCodeblockWindow.bind(null, 'joe-fs')}
                                 />
                             </Grid>
 
                             <Grid item xs={12}>
                                 <Typography variant='body1' gutterBottom>{
-                                    rootHandle ? (
-                                        selectedInfo ||
-                                        `根目名称: ${rootHandle.name}`
-                                    ) : '没有选择目录'
+                                    'showDirectoryPicker' in window ? (
+                                        rootHandle ? (
+                                            selectedInfo ||
+                                            `根目名称: ${rootHandle.name}`
+                                        ) : '没有选择目录'
+                                    ) : '你的浏览器不支持 File System Access API。'
                                 }</Typography>
                                 {rootHandle &&
                                     <TreeView

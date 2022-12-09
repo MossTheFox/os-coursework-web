@@ -114,7 +114,7 @@ function PaperProcessCommunication() {
                                     borderColor="divider"
                                 >程序语言: C++</Typography>
 
-                                <Box sx={{ pb: 2 }}>
+                                <Box sx={{ pb: 1 }}>
                                     <Button variant="outlined"
                                         children={enableB ? '重置程序' : '启动程序'}
                                         onClick={toggleB}
@@ -146,6 +146,11 @@ function PaperProcessCommunication() {
                             </Grid>
 
                             <Grid item xs={12} sm={4}>
+                                <Typography color="primary" sx={{
+                                    fontWeight: "bolder"
+                                }}
+                                    variant="body1"
+                                >组员: 乔译</Typography>
                                 <Typography color="primary" sx={{
                                     fontWeight: "bolder"
                                 }}

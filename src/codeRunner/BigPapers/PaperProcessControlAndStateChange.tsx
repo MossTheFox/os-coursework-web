@@ -2,6 +2,7 @@ import { Box, Button, Container, Grid, Paper, Typography, TextField, Divider } f
 import { useState, useCallback, useEffect } from "react";
 import TabbedPlaygroundTemplate from "../../components/TabbedPlaygroundTemplate";
 import PlaceholderEmu from "../liveDemo/PlaceholderEmu";
+import ProcessStatusChangeEmu from "../liveDemo/ProcessStatusChangeEmu";
 import { wasmModules } from "../wasmModules";
 
 function PaperProcessControlAndStateChange() {
@@ -37,7 +38,7 @@ function PaperProcessControlAndStateChange() {
             <Typography variant="h6" fontWeight="bolder" gutterBottom textAlign={"center"}
                 borderBottom={1} borderColor="divider"
             >
-                进程调度 (WIP)
+                进程调度
             </Typography>
             <Typography variant="body2" gutterBottom textAlign="center">
                 采用经典的实时调度算法来模拟进程的调度
@@ -47,7 +48,7 @@ function PaperProcessControlAndStateChange() {
                 tabs={2}
                 tabNames={[
                     "可视化交互演示",
-                    "C++ 实现",
+                    "C++ 实现 (WIP)",
                 ]}
                 tabNodes={[
                     <Box>
@@ -57,26 +58,33 @@ function PaperProcessControlAndStateChange() {
                                     这里是交互式演示。你可以从操作菜单中创建一个进程、并指定其接下来的行为。
                                 </Typography>
                                 <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    你可以尝试在其执行过程中申请临界资源，观察进程状态的变化方式。
+                                    你可以尝试让操作系统和进程分别做出不同的动作，观察进程的状态会如何变化。
+                                </Typography>
+                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                                    (进入创建态的过程被暂时忽略)
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                <Typography color="primary" sx={{
-                                    fontWeight: "bolder"
-                                }}
+                                <Typography color="primary" fontWeight="bolder"
+                                    variant="body1"
+                                >组员: 乔译</Typography>
+                                <Typography color="primary" fontWeight="bolder"
                                     variant="body1"
                                     gutterBottom
                                     borderBottom={1}
                                     borderColor="divider"
                                 >程序语言: TypeScript (React)</Typography>
-                                <Button variant="outlined"
-                                    children={'WIP'}
-                                    disabled
-                                />
+                                <Typography color="primary" sx={{
+                                    fontWeight: "bolder"
+                                }}
+                                    variant="body1"
+                                    gutterBottom
+                                >请在下方的交互菜单进行操作</Typography>
+
                             </Grid>
 
                             <Grid item xs={12}>
-                                <PlaceholderEmu />
+                                <ProcessStatusChangeEmu />
                             </Grid>
 
                         </Grid>

@@ -182,8 +182,7 @@ function PaperProcessScheduling() {
                                     borderBottom={1}
                                     borderColor="divider"
                                 >程序语言: C++</Typography>
-                                <Box pb={2}>
-
+                                <Box pb={1}>
                                     <Button variant="outlined"
                                         children={enableC ? '重置程序' : '启动程序'}
                                         onClick={toggleC}
@@ -229,7 +228,7 @@ function PaperProcessScheduling() {
                                     borderBottom={1}
                                     borderColor="divider"
                                 >程序语言: C++</Typography>
-                                <Box pb={2}>
+                                <Box pb={1}>
                                     <Button variant="outlined"
                                         children={enableD ? '重置程序' : '启动程序'}
                                         onClick={toggleD}
