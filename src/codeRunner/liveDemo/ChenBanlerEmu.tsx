@@ -3,13 +3,10 @@ import { useEffect, useCallback, useState, useRef, useMemo } from "react";
 import { wasmModules } from "../wasmModules";
 
 
-function bProcessSchedulingEmu({
+function ChenBanlerEmu({
     enable = false,
-    select = 'A',
-    // onFinished = null
 }: {
     enable: boolean,
-    select: 'A' | 'B',
     onFinished?: () => any,
 }) {
 
@@ -38,7 +35,7 @@ function bProcessSchedulingEmu({
     const boxRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (wasmModules.err || !wasmModules.liuCombinedA) {
+        if (wasmModules.err || !wasmModules.chenBanker) {
             setText(wasmModules.err + '');
             return;
         }
@@ -48,14 +45,7 @@ function bProcessSchedulingEmu({
             // window anchorEl
             window.__CONSOLE_INPUT__.anchorEl = boxRef.current;
             window.__CONSOLE_HANDLER__.registerCallbackFunction(handleChange);
-            switch (select) {
-                case 'A':
-                    wasmModules.liuCombinedA.run_EDF();
-                    break;
-                case 'B':
-                    wasmModules.liuCombinedA.run_LLF();
-                    break;
-            }
+            wasmModules.chenBanker.run_once_async();
             // return func, clean all
             return () => {
                 window.__CONSOLE_HANDLER__.unregisterCallbackFunction();
@@ -65,11 +55,11 @@ function bProcessSchedulingEmu({
             // ok how to stop...
             setLines([]);
         }
-    }, [runToggle, select]);
+    }, [runToggle]);
 
     return <Accordion>
         <Box ref={boxRef} p={2} sx={{
-            maxHeight: "40rem",
+            maxHeight: "50rem",
             overflowY: "auto"
         }}>
             <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{text}</Typography>
@@ -77,4 +67,4 @@ function bProcessSchedulingEmu({
     </Accordion>;
 }
 
-export default bProcessSchedulingEmu;
+export default ChenBanlerEmu;

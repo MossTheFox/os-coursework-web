@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid, Paper, Typography, Stack, Divider } from "@mui/material";
 import { useState, useCallback } from "react";
 import PaperDeadlockHandler from "./codeRunner/BigPapers/PaperDeadlockHandler";
-import PaperDebug from "./codeRunner/BigPapers/PaperDebug";
+// import PaperDebug from "./codeRunner/BigPapers/PaperDebug";
 import PaperFileSystemAccess from "./codeRunner/BigPapers/PaperFileSystemAccess";
 import PaperMemoryAllocation from "./codeRunner/BigPapers/PaperMemoryAllocation";
 import PaperProcessCommunication from "./codeRunner/BigPapers/PaperProcessCommunication";

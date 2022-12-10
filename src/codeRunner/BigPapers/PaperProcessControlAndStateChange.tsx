@@ -20,7 +20,6 @@ function PaperProcessControlAndStateChange() {
 
     const cleanUpFunction = useCallback(() => {
         // Note: 多线程或循环任务需要调用取消方法
-        wasmModules.debugModule?.stop();
         setEnableA(false);
         setEnableB(false);
         setEnableC(false);
@@ -45,10 +44,11 @@ function PaperProcessControlAndStateChange() {
             </Typography>
 
             <TabbedPlaygroundTemplate onTabChange={cleanUpFunction}
-                tabs={2}
+                // tabs={2}
+                tabs={1}
                 tabNames={[
                     "可视化交互演示",
-                    "C++ 实现 (WIP)",
+                    // "C++ 实现 (WIP)",
                 ]}
                 tabNodes={[
                     <Box>
@@ -89,35 +89,35 @@ function PaperProcessControlAndStateChange() {
 
                         </Grid>
                     </Box>,
-                    <Box>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={8}>
-                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    此程序采用 C++ 完成进程状态的模拟。
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Typography color="primary" sx={{
-                                    fontWeight: "bolder"
-                                }}
-                                    variant="body1"
-                                    gutterBottom
-                                    borderBottom={1}
-                                    borderColor="divider"
-                                >程序语言: C++</Typography>
-                                <Button variant="outlined"
-                                    children={enableB ? '重置程序' : '启动程序'}
-                                    disabled
-                                />
+                    // <Box>
+                    //     <Grid container spacing={2}>
+                    //         <Grid item xs={12} sm={8}>
+                    //             <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                    //                 此程序采用 C++ 完成进程状态的模拟。
+                    //             </Typography>
+                    //         </Grid>
+                    //         <Grid item xs={12} sm={4}>
+                    //             <Typography color="primary" sx={{
+                    //                 fontWeight: "bolder"
+                    //             }}
+                    //                 variant="body1"
+                    //                 gutterBottom
+                    //                 borderBottom={1}
+                    //                 borderColor="divider"
+                    //             >程序语言: C++</Typography>
+                    //             <Button variant="outlined"
+                    //                 children={enableB ? '重置程序' : '启动程序'}
+                    //                 disabled
+                    //             />
 
-                            </Grid>
+                    //         </Grid>
 
-                            <Grid item xs={12}>
-                                <PlaceholderEmu />
-                            </Grid>
+                    //         <Grid item xs={12}>
+                    //             <PlaceholderEmu />
+                    //         </Grid>
 
-                        </Grid>
-                    </Box>,
+                    //     </Grid>
+                    // </Box>,
                 ]}
             />
         </Container>

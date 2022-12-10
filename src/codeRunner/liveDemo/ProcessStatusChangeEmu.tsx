@@ -145,7 +145,7 @@ function ProcessStatusChangeEmu({
     return <Box>
         <Grid container spacing={2}>
             <Grid item xs={12} sm={8} display="flex" justifyContent="center" alignItems="start"
-                sx={{ backgroundColor: '#fff', borderRadius: '16px', color: '#111' }}
+                sx={{ backgroundColor: '#fff', borderRadius: '16px', color: '#111' }} p={2}
             >
                 <Box ref={anchor}
                     position="relative"

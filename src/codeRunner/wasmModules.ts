@@ -24,20 +24,23 @@
 
 export const wasmModules: {
     err: null | string,
-    debugModule?: {
-        run_print: () => {},
-        run_endless: () => {},
-        run_ask_input: () => {},
-        run_give_param: (param?: string) => {},
-        stop: () => {}
-    },
+    // debugModule?: {
+    //     run_print: () => {},
+    //     run_endless: () => {},
+    //     run_ask_input: () => {},
+    //     run_give_param: (param?: string) => {},
+    //     stop: () => {}
+    // },
     liuCombinedA?: {
         run_EDF: () => {},
         run_LLF: () => {},
         run_programCommunication: () => {}
     },
-    lzwPD?: {
-        run: () => {}
+    // lzwPD?: {
+    //     run: () => {}
+    // }
+    chenBanker?: {
+        run_once_async: () => {}
     }
 } = {
     err: null
@@ -49,31 +52,30 @@ export const wasmModules: {
         wasmModules.err = '模块正在加载。点击运行以确认加载状态并执行程序。';
 
         // 0: DEBUG
-        if (typeof debugModule !== 'undefined') {
+        // if (typeof debugModule !== 'undefined') {
 
-            let debug = await debugModule();
-            wasmModules.debugModule = {
-                run_print() {
-                    debug.ccall('print_something', null, null, null);
-                },
-                run_endless() {
-                    debug.ccall('start_endless_thread', null, null, null);
-                },
-                run_give_param(param = "Hello 🦊") {
-                    debug.ccall('param_something', null, ['string'], [param]);
-                },
-                run_ask_input() {
-                    debug.ccall('input_something', null, null, null, { async: true });
-                },
-                stop: () => {
-                    debug.ccall('end', null, null, null);
-                }
-            };
-        }
+        //     let debug = await debugModule();
+        //     wasmModules.debugModule = {
+        //         run_print() {
+        //             debug.ccall('print_something', null, null, null);
+        //         },
+        //         run_endless() {
+        //             debug.ccall('start_endless_thread', null, null, null);
+        //         },
+        //         run_give_param(param = "Hello 🦊") {
+        //             debug.ccall('param_something', null, ['string'], [param]);
+        //         },
+        //         run_ask_input() {
+        //             debug.ccall('input_something', null, null, null, { async: true });
+        //         },
+        //         stop: () => {
+        //             debug.ccall('end', null, null, null);
+        //         }
+        //     };
+        // }
 
         // 1. LiuModuleA
         if (typeof liuModuleA !== 'undefined') {
-
             let module1 = await liuModuleA();
             wasmModules.liuCombinedA = {
                 run_EDF: () => {
@@ -94,6 +96,16 @@ export const wasmModules: {
         //         module2.ccall('run', null, null, null);
         //     }
         // };
+
+        // 陈锦天 银行家算法 (单次程序，不保留上下文)
+        if (typeof chenBanker !== 'undefined') {
+            wasmModules.chenBanker = {
+                run_once_async: async () => {
+                    let m = await chenBanker();
+                    m.callMain();
+                }
+            };
+        }
 
         // END
         wasmModules.err = '';

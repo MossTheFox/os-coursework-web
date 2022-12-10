@@ -22,7 +22,6 @@ function PaperProcessCommunication() {
 
     const cleanUpFunction = useCallback(() => {
         // Note: 多线程或循环任务需要调用取消方法
-        wasmModules.debugModule?.stop();
         setEnableA(false);
         setEnableB(false);
         setEnableC(false);

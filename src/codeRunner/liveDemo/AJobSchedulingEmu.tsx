@@ -254,7 +254,7 @@ function AJobSchedulingEmu({
 
         <Paper>
             <Box ref={boxRef} p={2} sx={{
-                maxHeight: "10rem",
+                maxHeight: "40rem",
                 overflowY: "auto"
             }}>
                 <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{text}</Typography>
