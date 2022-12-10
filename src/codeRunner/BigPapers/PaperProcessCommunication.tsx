@@ -49,44 +49,11 @@ function PaperProcessCommunication() {
             <TabbedPlaygroundTemplate onTabChange={cleanUpFunction}
                 tabs={3}
                 tabNames={[
-                    "共享存储器系统",
                     "消息缓冲队列 (直接消息传递)",
                     "信箱通信模拟 (间接消息传递)",
+                    "共享存储器系统",
                 ]}
                 tabNodes={[
-                    <Box>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={8}>
-                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    此程序对于所有的 C++ 模块 (编译为 WASM 执行) 的多线程执行，均用到了浏览器运行环境提供的 <strong>sharedArrayBuffer</strong> API。
-                                </Typography>
-                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    此 API 允许申请可以在不同的 Web Workers 之间共享的 Buffer, 用于映射到 C++ 模块的内存地址。每个线程单独拥有一个 Web Worker。
-                                </Typography>
-                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    虽说与进程<strong>之间</strong>通信有些区别，但这里面的相同点还是有的。不同的 Web Worker 通过共享 sharedArrayBuffer 来实现对多线程程序的支持、保证程序内的数据互通。
-                                </Typography>
-                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    注: JavaScript 是单线程语言。借助 Web Worker 可以间接地实现一些多线程程序的样子。Web Worker 本身相当于是一个独立的进程——其<strong>宿主程序无法访问其内部的任何资源</strong>，从这个角度来说，它更接近一个<strong>进程</strong> (process) 而非 thread。
-                                </Typography>
-                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    通过向浏览器申请共享存储 (sharedArrayBuffer)，它才可以实现和宿主页面或者其他 Web Workers 共用资源或实现高效的数据通信 (传递大量数据而不用创建副本)。此特性也可以基于其来创建<strong>通信管道</strong>来传输大量数据。
-                                </Typography>
-                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    浏览器提供的还有另一种通信方式: postMessage, 这个更接近消息传递系统的信箱通信的模式，会需要创建数据的副本，可用于页面之间或是与 Web Workers、Service Worker 的通信。参见当前卡片的 信箱通信 演示。
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Typography color="primary" sx={{
-                                    fontWeight: "bolder"
-                                }}
-                                    variant="body1"
-                                    gutterBottom
-                                >没有独立的模拟程序</Typography>
-                            </Grid>
-
-                        </Grid>
-                    </Box>,
                     <Box>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={8}>
@@ -171,7 +138,40 @@ function PaperProcessCommunication() {
                             </Grid>
 
                         </Grid>
-                    </Box>
+                    </Box>,
+                    <Box>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={8}>
+                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                                    此程序对于所有的 C++ 模块 (编译为 WASM 执行) 的多线程执行，均用到了浏览器运行环境提供的 <strong>sharedArrayBuffer</strong> API。
+                                </Typography>
+                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                                    此 API 允许申请可以在不同的 Web Workers 之间共享的 Buffer, 用于映射到 C++ 模块的内存地址。每个线程单独拥有一个 Web Worker。
+                                </Typography>
+                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                                    虽说与进程<strong>之间</strong>通信有些区别，但这里面的相同点还是有的。不同的 Web Worker 通过共享 sharedArrayBuffer 来实现对多线程程序的支持、保证程序内的数据互通。
+                                </Typography>
+                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                                    注: JavaScript 是单线程语言。借助 Web Worker 可以间接地实现一些多线程程序的样子。Web Worker 本身相当于是一个独立的进程——其<strong>宿主程序无法访问其内部的任何资源</strong>，从这个角度来说，它更接近一个<strong>进程</strong> (process) 而非 thread。
+                                </Typography>
+                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                                    通过向浏览器申请共享存储 (sharedArrayBuffer)，它才可以实现和宿主页面或者其他 Web Workers 共用资源或实现高效的数据通信 (传递大量数据而不用创建副本)。此特性也可以基于其来创建<strong>通信管道</strong>来传输大量数据。
+                                </Typography>
+                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                                    浏览器提供的还有另一种通信方式: postMessage, 这个更接近消息传递系统的信箱通信的模式，会需要创建数据的副本，可用于页面之间或是与 Web Workers、Service Worker 的通信。参见当前卡片的 信箱通信 演示。
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <Typography color="primary" sx={{
+                                    fontWeight: "bolder"
+                                }}
+                                    variant="body1"
+                                    gutterBottom
+                                >没有独立的模拟程序</Typography>
+                            </Grid>
+
+                        </Grid>
+                    </Box>,
                 ]}
             />
         </Container>

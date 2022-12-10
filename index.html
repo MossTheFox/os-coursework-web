@@ -39,6 +39,7 @@
      * @type {(resolve: (input: any) => void) => void} 
      */
     let inputHandlerCB = null;
+    
     window.__CONSOLE_INPUT__ = {
       registerInputHandler: (fn) => inputHandlerCB = fn,
       removeInputHandler: () => inputHandlerCB = null,
@@ -55,11 +56,24 @@
     const defaultCallback = (str) => consoleLog(str);
     let consoleLogCallback = defaultCallback;
 
+    /** @type {(() => void) | null} */
+    let endLatestAsyncTask = null;
+
     /**
      * 重定向控制台输出、注册 Callback 用
      */
     const consoleOutputHandler = {
+      registerEndAsyncTaskFunction: (fn) => {
+        endLatestAsyncTask = fn;
+      },
+      unregisterEndAsyncFunction: () => {
+        endLatestAsyncTask = null;
+      },
+      /** 当有新的任务注册进来，如果有异步任务未结束，会将其结束。 */
       registerCallbackFunction: (fn) => {
+        if (typeof endLatestAsyncTask === 'function') {
+          endLatestAsyncTask();
+        }
         consoleLogCallback = fn;
       },
       unregisterCallbackFunction: () => {

@@ -74,7 +74,7 @@ function PaperThreadMechanism() {
                                     gutterBottom
                                     borderBottom={1}
                                     borderColor="divider"
-                                >程序语言: TypeScript (React)</Typography>
+                                >程序语言: C++</Typography>
                                 <Box pb={1}>
                                     <Button variant="outlined"
                                         children={enableA ? '重置程序' : '启动程序'}

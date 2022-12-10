@@ -1,8 +1,11 @@
 import { Box, Button, Container, Grid, Paper, Typography, TextField, Divider } from "@mui/material";
 import { useState, useCallback, useEffect } from "react";
 import TabbedPlaygroundTemplate from "../../components/TabbedPlaygroundTemplate";
-import PlaceholderEmu from "../liveDemo/PlaceholderEmu";
-import { wasmModules } from "../wasmModules";
+import TSPhiChopsticksEmu from "../liveDemo/TSPhiChopsticksEmu";
+import TSProducerConsumerEmu from "../liveDemo/TSProducerConsumerEmu";
+import { HourglassEmpty, Psychology, SetMeal } from "@mui/icons-material";
+import { openCodeblockWindow } from "../../components/codeblockUtils";
+
 
 function PaperProcessMutAndSync() {
 
@@ -38,7 +41,7 @@ function PaperProcessMutAndSync() {
             <Typography variant="h6" fontWeight="bolder" gutterBottom textAlign={"center"}
                 borderBottom={1} borderColor="divider"
             >
-                互斥与进程同步 (WIP)
+                互斥与进程同步
             </Typography>
             <Typography variant="body2" gutterBottom textAlign="center">
                 采用信号量与管程来解决多道程序的资源共享问题
@@ -62,22 +65,33 @@ function PaperProcessMutAndSync() {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                <Typography color="primary" sx={{
-                                    fontWeight: "bolder"
-                                }}
+                                <Typography color="primary"
+                                    fontWeight="bolder"
+                                    variant="body1"
+                                    gutterBottom
+                                >组员: 乔译</Typography>
+                                <Typography color="primary"
+                                    fontWeight="bolder"
                                     variant="body1"
                                     gutterBottom
                                     borderBottom={1}
                                     borderColor="divider"
-                                >程序语言: TypeScript (React)</Typography>
-                                <Button variant="outlined"
-                                    children={'WIP'}
-                                    disabled
+                                >程序语言: TypeScript</Typography>
+                                <Box pb={1}>
+                                    <Button variant="outlined"
+                                        children={enableA ? '重置程序' : '启动程序'}
+                                        onClick={toggleA}
+                                    />
+                                </Box>
+                                <Button variant="text"
+                                    color="info"
+                                    children={'查看源代码'}
+                                    onClick={openCodeblockWindow.bind(null, 'joe-producer-consumer')}
                                 />
                             </Grid>
 
                             <Grid item xs={12}>
-                                <PlaceholderEmu />
+                                <TSProducerConsumerEmu enable={enableA} />
                             </Grid>
 
                         </Grid>
@@ -94,25 +108,39 @@ function PaperProcessMutAndSync() {
                                 <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
                                     引入管程的程序有一个特点：对信号量的等待不再会需要有用于轮询的 while 死循环，而是类似于事件触发型 (当有临界资源被申请和释放时才会占用 CPU 资源)。
                                 </Typography>
+                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                                    哲学家的状态：饥饿 (<HourglassEmpty fontSize="inherit" />)、正在用餐 (<SetMeal fontSize="inherit" />)、正在思考 (<Psychology fontSize="inherit" />)。
+                                </Typography>
                             </Grid>
 
                             <Grid item xs={12} sm={4}>
-                                <Typography color="primary" sx={{
-                                    fontWeight: "bolder"
-                                }}
+                                <Typography color="primary"
+                                    fontWeight="bolder"
+                                    variant="body1"
+                                    gutterBottom
+                                >组员: 乔译</Typography>
+                                <Typography color="primary"
+                                    fontWeight="bolder"
                                     variant="body1"
                                     gutterBottom
                                     borderBottom={1}
                                     borderColor="divider"
                                 >程序语言: TypeScript (React)</Typography>
-                                <Button variant="outlined"
-                                    children={'WIP'}
-                                    disabled
+                                <Box pb={1}>
+                                    <Button variant="outlined"
+                                        children={enableB ? '重置程序' : '启动程序'}
+                                        onClick={toggleB}
+                                    />
+                                </Box>
+                                <Button variant="text"
+                                    color="info"
+                                    children={'查看源代码'}
+                                    onClick={openCodeblockWindow.bind(null, 'joe-philosopher')}
                                 />
                             </Grid>
 
                             <Grid item xs={12}>
-                                <PlaceholderEmu />
+                                <TSPhiChopsticksEmu enable={enableB} />
                             </Grid>
 
                         </Grid>
