@@ -39,7 +39,13 @@ export const wasmModules: {
     // lzwPD?: {
     //     run: () => {}
     // }
+    lzwMemAllocation?: {
+        run_once: () => {}
+    },
     chenBanker?: {
+        run_once_async: () => {}
+    },
+    lrxThreads?: {
         run_once_async: () => {}
     }
 } = {
@@ -97,11 +103,31 @@ export const wasmModules: {
         //     }
         // };
 
+        // 刘智文 内存分配 (保留上下文)
+        if (typeof lzwMemAllocation !== 'undefined') {
+            let m = await lzwMemAllocation();
+            wasmModules.lzwMemAllocation = {
+                run_once: () => {
+                    m.callMain({ async: true });
+                }
+            };
+        }
+
         // 陈锦天 银行家算法 (单次程序，不保留上下文)
         if (typeof chenBanker !== 'undefined') {
             wasmModules.chenBanker = {
                 run_once_async: async () => {
                     let m = await chenBanker();
+                    m.callMain();
+                }
+            };
+        }
+
+        // 刘瑞鑫 线程机制 (单次程序，不保留上下文)
+        if (typeof lrxThread !== 'undefined') {
+            wasmModules.lrxThreads = {
+                run_once_async: async () => {
+                    let m = await lrxThread();
                     m.callMain();
                 }
             };

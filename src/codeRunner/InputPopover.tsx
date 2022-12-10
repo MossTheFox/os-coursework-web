@@ -25,19 +25,31 @@ function InputPopover() {
 
     const inputRequestHandler = useCallback((resolve: (i: any) => void) => {
         setInput('');
-        setOpen(true);
-        setAnchorEl(window.__CONSOLE_INPUT__.anchorEl);
-        setResolveFunc({
-            resolve
-        });
+        // has to do this or else the anchorEl position won't reload.
         setTimeout(() => {
-            inputNode.current?.focus();
+            let elemRect = window.__CONSOLE_INPUT__.anchorEl?.getBoundingClientRect()!;
+            if (!elemRect) {
+                // boom?
+                location.reload();
+                return;
+            }
+            window.scrollTo(0, window.scrollY + elemRect.bottom - (0.5 * window.innerHeight))
+            setOpen(true);
+            setAnchorEl(window.__CONSOLE_INPUT__.anchorEl);
+            setResolveFunc({
+                resolve
+            });
+            setTimeout(() => {
+                inputNode.current?.focus();
+            }, 0);
         }, 0);
     }, [inputNode]);
 
     const handleSubmit = useCallback(() => {
-        resolveFunc.resolve(input);
         setOpen(false);
+        setTimeout(() => {
+            resolveFunc.resolve(input);
+        }, 0);
     }, [input]);
 
     const onKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {

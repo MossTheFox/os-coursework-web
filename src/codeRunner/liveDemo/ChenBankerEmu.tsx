@@ -3,7 +3,7 @@ import { useEffect, useCallback, useState, useRef, useMemo } from "react";
 import { wasmModules } from "../wasmModules";
 
 
-function ChenBanlerEmu({
+function ChenBankerEmu({
     enable = false,
 }: {
     enable: boolean,
@@ -13,6 +13,7 @@ function ChenBanlerEmu({
     const runToggle = useMemo(() => enable, [enable]);
     const [text, setText] = useState('...');
     const [lines, setLines] = useState<string[]>([]);
+    const boxRef = useRef<HTMLDivElement>(null);
 
     const handleChange = useCallback((str: string) => {
         console.log(['New Line: ' + str])
@@ -22,7 +23,7 @@ function ChenBanlerEmu({
                 boxRef.current?.scrollTo(0, boxRef.current?.scrollHeight);
             }, 0);
         }
-    }, []);
+    }, [boxRef]);
 
     useEffect(() => {
         if (lines.length) {
@@ -32,7 +33,6 @@ function ChenBanlerEmu({
         }
     }, [lines]);
 
-    const boxRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (wasmModules.err || !wasmModules.chenBanker) {
@@ -67,4 +67,4 @@ function ChenBanlerEmu({
     </Accordion>;
 }
 
-export default ChenBanlerEmu;
+export default ChenBankerEmu;

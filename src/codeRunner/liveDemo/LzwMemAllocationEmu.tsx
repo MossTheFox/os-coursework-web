@@ -3,7 +3,7 @@ import { useEffect, useCallback, useState, useRef, useMemo } from "react";
 import { wasmModules } from "../wasmModules";
 
 
-function LiuProcessCommunicationEmu({
+function LzwMemAllocationEmu({
     enable = false,
 }: {
     enable: boolean,
@@ -13,17 +13,22 @@ function LiuProcessCommunicationEmu({
     const runToggle = useMemo(() => enable, [enable]);
     const [text, setText] = useState('...');
     const [lines, setLines] = useState<string[]>([]);
+
     const boxRef = useRef<HTMLDivElement>(null);
 
     const handleChange = useCallback((str: string) => {
         console.log(['New Line: ' + str])
         setLines((prev) => [...prev, str]);
-        if (boxRef?.current) {
-            setTimeout(() => {
-                boxRef.current?.scrollTo(0, boxRef.current?.scrollHeight);
-            }, 0);
-        }
-    }, [boxRef]);
+        // if (boxRef?.current) {
+        //     setTimeout(() => {
+        //         // boxRef.current?.scrollTo(0, boxRef.current?.scrollHeight);
+        //         if (boxRef.current?.scrollTop !== undefined) {
+        //             boxRef.current.scrollTop = boxRef.current?.scrollHeight;
+        //         }
+        //     }, 0);
+        // }
+        // }, [boxRef]);
+    }, []);
 
     useEffect(() => {
         if (lines.length) {
@@ -33,9 +38,8 @@ function LiuProcessCommunicationEmu({
         }
     }, [lines]);
 
-
     useEffect(() => {
-        if (wasmModules.err || !wasmModules.liuCombinedA) {
+        if (wasmModules.err || !wasmModules.lzwMemAllocation) {
             setText(wasmModules.err + '');
             return;
         }
@@ -45,7 +49,7 @@ function LiuProcessCommunicationEmu({
             // window anchorEl
             window.__CONSOLE_INPUT__.anchorEl = boxRef.current;
             window.__CONSOLE_HANDLER__.registerCallbackFunction(handleChange);
-            wasmModules.liuCombinedA.run_programCommunication();
+            wasmModules.lzwMemAllocation.run_once();
             // return func, clean all
             return () => {
                 window.__CONSOLE_HANDLER__.unregisterCallbackFunction();
@@ -59,12 +63,12 @@ function LiuProcessCommunicationEmu({
 
     return <Accordion>
         <Box ref={boxRef} p={2} sx={{
-            maxHeight: "40rem",
-            overflowY: "auto"
+            // maxHeight: "10rem",
+            // overflowY: "auto"
         }}>
             <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{text}</Typography>
         </Box>
     </Accordion>;
 }
 
-export default LiuProcessCommunicationEmu;
+export default LzwMemAllocationEmu;

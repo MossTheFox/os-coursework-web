@@ -16,6 +16,7 @@ function bProcessSchedulingEmu({
     const runToggle = useMemo(() => enable, [enable]);
     const [text, setText] = useState('...');
     const [lines, setLines] = useState<string[]>([]);
+    const boxRef = useRef<HTMLDivElement>(null);
 
     const handleChange = useCallback((str: string) => {
         console.log(['New Line: ' + str])
@@ -25,7 +26,7 @@ function bProcessSchedulingEmu({
                 boxRef.current?.scrollTo(0, boxRef.current?.scrollHeight);
             }, 0);
         }
-    }, []);
+    }, [boxRef]);
 
     useEffect(() => {
         if (lines.length) {
@@ -35,7 +36,6 @@ function bProcessSchedulingEmu({
         }
     }, [lines]);
 
-    const boxRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (wasmModules.err || !wasmModules.liuCombinedA) {

@@ -2,7 +2,7 @@ import { Box, Button, Container, Grid, Paper, Typography, TextField, Divider } f
 import { useState, useCallback, useEffect } from "react";
 import { openCodeblockWindow } from "../../components/codeblockUtils";
 import TabbedPlaygroundTemplate from "../../components/TabbedPlaygroundTemplate";
-import ChenBanlerEmu from "../liveDemo/ChenBanlerEmu";
+import ChenBankerEmu from "../liveDemo/ChenBankerEmu";
 import PlaceholderEmu from "../liveDemo/PlaceholderEmu";
 import { wasmModules } from "../wasmModules";
 
@@ -89,7 +89,7 @@ function PaperDeadlockHandler() {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <ChenBanlerEmu enable={enableA} />
+                                <ChenBankerEmu enable={enableA} />
                             </Grid>
 
                         </Grid>

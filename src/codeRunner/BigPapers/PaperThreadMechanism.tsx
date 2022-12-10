@@ -1,6 +1,8 @@
 import { Box, Button, Container, Grid, Paper, Typography, TextField, Divider } from "@mui/material";
 import { useState, useCallback, useEffect } from "react";
+import { openCodeblockWindow } from "../../components/codeblockUtils";
 import TabbedPlaygroundTemplate from "../../components/TabbedPlaygroundTemplate";
+import LrxThreadsEmu from "../liveDemo/LrxThreadsEmu";
 import PlaceholderEmu from "../liveDemo/PlaceholderEmu";
 import { wasmModules } from "../wasmModules";
 
@@ -38,76 +40,89 @@ function PaperThreadMechanism() {
             <Typography variant="h6" fontWeight="bolder" gutterBottom textAlign={"center"}
                 borderBottom={1} borderColor="divider"
             >
-                线程机制 (WIP)
+                线程机制
             </Typography>
             <Typography variant="body2" gutterBottom textAlign="center">
-                内核支持线程 KST (Kernel Supported Threads) 与用户级线程 ULT (User Level Threads)
+                {/* 内核支持线程 KST (Kernel Supported Threads) 与用户级线程 ULT (User Level Threads) */}
+                理解和认识操作系统线程的运作机制
             </Typography>
 
             <TabbedPlaygroundTemplate onTabChange={cleanUpFunction}
-                tabs={2}
+                // tabs={2}
+                tabs={1}
                 tabNames={[
-                    "TODO",
-                    "TODO",
+                    "线程调度机制模拟",
+                    // "TODO",
                 ]}
                 tabNodes={[
                     <Box>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={8}>
                                 <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    TODO
+                                    采用最高优先级算法进行线程的调度。
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                <Typography color="primary" sx={{
-                                    fontWeight: "bolder"
-                                }}
+                                <Typography color="primary"
+                                    fontWeight="bolder"
+                                    variant="body1"
+                                    gutterBottom
+                                >组员: 刘瑞鑫</Typography>
+                                <Typography color="primary"
+                                    fontWeight="bolder"
                                     variant="body1"
                                     gutterBottom
                                     borderBottom={1}
                                     borderColor="divider"
                                 >程序语言: TypeScript (React)</Typography>
-                                <Button variant="outlined"
-                                    children={'WIP'}
-                                    disabled
+                                <Box pb={1}>
+                                    <Button variant="outlined"
+                                        children={enableA ? '重置程序' : '启动程序'}
+                                        onClick={toggleA}
+                                    />
+                                </Box>
+                                <Button variant="text"
+                                    color="info"
+                                    children={'查看源代码'}
+                                    onClick={openCodeblockWindow.bind(null, 'lrx-threads')}
                                 />
                             </Grid>
 
                             <Grid item xs={12}>
-                                <PlaceholderEmu />
+                                <LrxThreadsEmu enable={enableA} />
                             </Grid>
 
                         </Grid>
                     </Box>,
-                    <Box>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={8}>
-                                <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
-                                    TODO
-                                </Typography>
-                            </Grid>
+                    // <Box>
+                    //     <Grid container spacing={2}>
+                    //         <Grid item xs={12} sm={8}>
+                    //             <Typography gutterBottom variant="body1" sx={{ textIndent: "2rem" }}>
+                    //                 TODO
+                    //             </Typography>
+                    //         </Grid>
 
-                            <Grid item xs={12} sm={4}>
-                                <Typography color="primary" sx={{
-                                    fontWeight: "bolder"
-                                }}
-                                    variant="body1"
-                                    gutterBottom
-                                    borderBottom={1}
-                                    borderColor="divider"
-                                >程序语言: TypeScript (React)</Typography>
-                                <Button variant="outlined"
-                                    children={'WIP'}
-                                    disabled
-                                />
-                            </Grid>
+                    //         <Grid item xs={12} sm={4}>
+                    //             <Typography color="primary" sx={{
+                    //                 fontWeight: "bolder"
+                    //             }}
+                    //                 variant="body1"
+                    //                 gutterBottom
+                    //                 borderBottom={1}
+                    //                 borderColor="divider"
+                    //             >程序语言: TypeScript (React)</Typography>
+                    //             <Button variant="outlined"
+                    //                 children={'WIP'}
+                    //                 disabled
+                    //             />
+                    //         </Grid>
 
-                            <Grid item xs={12}>
-                                <PlaceholderEmu />
-                            </Grid>
+                    //         <Grid item xs={12}>
+                    //             <PlaceholderEmu />
+                    //         </Grid>
 
-                        </Grid>
-                    </Box>,
+                    //     </Grid>
+                    // </Box>,
                 ]}
             />
         </Container>
