@@ -1,5 +1,5 @@
 import { HourglassEmpty, Psychology, SetMeal } from "@mui/icons-material";
-import { Grid, Box, Typography, Paper } from "@mui/material";
+import { Grid, Box, Typography, Paper, Slider } from "@mui/material";
 import { useEffect, useCallback, useState, useRef } from "react";
 import { tsPhiEmuController } from "./scripts/tsPhilosopher";
 
@@ -20,6 +20,11 @@ function TSPhiChopsticksEmu({
 
     const [text, setText] = useState('未开始模拟');
     const [phiStatus, setPhiStatus] = useState('------------');
+    const [speedRate, setSpeedRate] = useState(10);
+
+    useEffect(() => {
+        tsPhiEmuController.setSpeedRate(speedRate);
+    }, [speedRate]);
 
     const handleLine = useCallback((line: string) => {
         setPhiStatus(line);
@@ -54,7 +59,7 @@ function TSPhiChopsticksEmu({
         }
     }, [enable]);
 
-    return <Paper sx={{ py: 2 }}>
+    return <Paper sx={{ p: 2 }}>
         {/* 6 x 6 | 放 12 个哲学家 | 圆形布局不好写就用网格凑合一下 */}
         <Box textAlign="center">
             <Box display="inline-block" maxWidth="16rem">
@@ -104,16 +109,25 @@ function TSPhiChopsticksEmu({
             </Box>
         </Box>
 
-        <Box ref={boxRef} p={2} sx={{
-            maxHeight: "10rem",
-            overflowY: "auto",
-        }}>
-            <Typography variant="body2" sx={{
-                whiteSpace: 'pre-wrap',
-                fontFamily: 'monospace'
-            }}>{text}</Typography>
-        </Box>
-    </Paper>;
+        <Grid container spacing={2}>
+            <Grid item xs={12} sm={8}>
+                <Box ref={boxRef} p={2} sx={{
+                    maxHeight: "10rem",
+                    overflowY: "auto",
+                }}>
+                    <Typography variant="body2" sx={{
+                        whiteSpace: 'pre-wrap',
+                        fontFamily: 'monospace'
+                    }}>{text}</Typography>
+                </Box>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+                <Typography gutterBottom>随机刻间隔时间倍率 ({speedRate}x)</Typography>
+                <Slider valueLabelDisplay="auto" min={10} max={500} step={10} value={speedRate} onChange={(e, v) => { setSpeedRate(+v) }} />
+            </Grid>
+        </Grid>
+
+    </Paper >;
 }
 
 export default TSPhiChopsticksEmu;

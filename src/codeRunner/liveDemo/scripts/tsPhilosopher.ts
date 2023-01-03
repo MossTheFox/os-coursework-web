@@ -2,7 +2,7 @@
 // 注意: 是对 哲学家 设置信号量，非对筷子
 // 参考: https://blog.forec.cn/2016/11/24/os-concepts-6/
 
-const randomTickSpeedRate = 10;
+let randomTickSpeedRate = 10;
 
 let waitForMS = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 let randomWaitFor = () => waitForMS(Math.floor(Math.random() * 100 * randomTickSpeedRate));
@@ -119,5 +119,12 @@ export const tsPhiEmuController = {
     },
     stop: () => {
         STOPPED = true;
-    }
+    },
+    setSpeedRate: (num: number) => {
+        if (num < 0) {
+            randomTickSpeedRate = 10;
+            return;
+        }
+        randomTickSpeedRate = num;
+    },
 };
